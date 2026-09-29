@@ -1,0 +1,141 @@
+<view class="chat-container">
+  <!-- 顶部 Banner：支持 Sticky 吸顶悬浮 -->
+  <view class="ai-header-bar">
+    <view class="cart-btn-box" bindtap="toggleCartDrawer">
+      <view class="cart-icon">🛒</view>
+      <view class="cart-badge" wx:if="{{totalCartCount > 0}}">{{totalCartCount}}</view>
+    </view>
+    <view class="header-tips">
+      <text class="sparkle">✨</text>
+      <text>告诉我你的喜好与预算，我来为你挑选！</text>
+    </view>
+  </view>
+
+  <scroll-view class="message-list" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation>
+    <view wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}" class="msg-row {{item.sender}}">
+      
+      <view class="avatar ai-avatar" wx:if="{{item.sender === 'ai'}}">
+        <text>✨</text>
+      </view>
+
+      <view class="msg-bubble {{item.sender}}">
+        <!-- 对话文本 -->
+        <text class="msg-text" user-select>{{item.text}}</text>
+
+        <!-- 一键加购全套组合按钮（多于1道菜时显示） -->
+        <view class="batch-add-bar" wx:if="{{item.dishes && item.dishes.length > 1}}">
+          <text class="combo-title">🍱 推荐组合套餐（共{{item.dishes.length}}件）</text>
+          <view class="batch-btn" bindtap="addAllToCart" data-dishes="{{item.dishes}}">一键全加购</view>
+        </view>
+        
+        <!-- 🎯 菜品推荐列表（支持单菜品与组合菜品循环平铺） -->
+        <block wx:if="{{item.dishes && item.dishes.length > 0}}">
+          <view class="dish-item-block" wx:for="{{item.dishes}}" wx:for-item="dish" wx:key="daily_menu_id">
+            
+            <!-- 菜品卡片 -->
+            <view class="dish-card">
+              <view class="dish-info">
+                <text class="dish-name">{{dish.name || dish.dish_name}}</text>
+                <text class="dish-stall" wx:if="{{dish.stall_name}}">{{dish.stall_name}}</text>
+                <text class="dish-price">¥{{dish.price}}</text>
+              </view>
+              <view class="add-btn" bindtap="addToCartFromAI" data-dish="{{dish}}">+ 加入购物车</view>
+            </view>
+
+            <!-- 营养数据卡片（严格判断：只有当 nutrition 非空时才渲染） -->
+            <view class="nutrition-card" wx:if="{{dish.nutrition}}">
+              <view class="nutrition-header">
+                <text class="nut-icon">🥗</text>
+                <text class="nut-title">每份预估营养成分</text>
+              </view>
+              <view class="nutrition-grid">
+                <view class="nut-item">
+                  <text class="nut-val">{{dish.nutrition.calories != null ? dish.nutrition.calories : '--'}}</text>
+                  <text class="nut-lbl">热量(kcal)</text>
+                </view>
+                <view class="nut-item">
+                  <text class="nut-val">{{dish.nutrition.protein != null ? dish.nutrition.protein + 'g' : '--'}}</text>
+                  <text class="nut-lbl">蛋白质</text>
+                </view>
+                <view class="nut-item">
+                  <text class="nut-val">{{dish.nutrition.fat != null ? dish.nutrition.fat + 'g' : '--'}}</text>
+                  <text class="nut-lbl">脂肪</text>
+                </view>
+                <view class="nut-item">
+                  <text class="nut-val">{{dish.nutrition.carbs != null ? dish.nutrition.carbs + 'g' : '--'}}</text>
+                  <text class="nut-lbl">碳水</text>
+                </view>
+              </view>
+            </view>
+
+          </view>
+        </block>
+
+      </view>
+
+    </view>
+
+    <!-- 思考中提示动画 -->
+    <view class="msg-row ai" wx:if="{{thinking}}" id="msg-thinking">
+      <view class="avatar ai-avatar"><text>✨</text></view>
+      <view class="msg-bubble ai thinking-bubble">
+        <text class="thinking-text">思考中</text>
+        <view class="dots-box">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="preset-hints" wx:if="{{messages.length <= 1}}">
+    <view class="hint-tag" wx:for="{{hints}}" wx:key="*this" data-text="{{item}}" bindtap="useHint">
+      {{item}}
+    </view>
+  </view>
+
+  <view class="input-bar">
+    <input 
+      class="chat-input" 
+      value="{{inputValue}}" 
+      placeholder="输入你的口味或预算，例如：15元盖饭..." 
+      confirm-type="send" 
+      bindinput="onInput" 
+      bindconfirm="sendMessage"
+    />
+    <button 
+      class="send-btn {{hasInput ? 'active' : ''}}" 
+      bindtap="sendMessage"
+      disabled="{{!hasInput || thinking}}"
+    >发送</button>
+  </view>
+
+  <view class="drawer-mask" wx:if="{{showCartDrawer}}" bindtap="toggleCartDrawer"></view>
+  <view class="cart-drawer {{showCartDrawer ? 'show' : ''}}">
+    <view class="drawer-header">
+      <text class="drawer-title">已选菜品</text>
+      <text class="clear-btn" bindtap="clearCart" wx:if="{{cartList.length > 0}}">🗑️ 清空</text>
+    </view>
+    
+    <scroll-view class="drawer-list" scroll-y wx:if="{{cartList.length > 0}}">
+      <view class="drawer-item" wx:for="{{cartList}}" wx:key="id">
+        <!-- 🎯 增加名称多字段兼容展示 -->
+        <view class="item-name">{{item.name || item.dish_name || item.title || '推荐菜品'}}</view>
+        <view class="item-price">¥{{item.price}}</view>
+        <view class="item-counter">
+          <button size="mini" class="cnt-btn" bindtap="updateCartQty" data-id="{{item.id || item.daily_menu_id}}" data-delta="-1">−</button>
+          <text class="cnt-num">{{item.quantity}}</text>
+          <button size="mini" class="cnt-btn plus" bindtap="updateCartQty" data-id="{{item.id || item.daily_menu_id}}" data-delta="1">+</button>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="empty-cart-tips" wx:else>购物车还是空的，快让 AI 推荐一些吧！</view>
+
+    <view class="drawer-footer" wx:if="{{cartList.length > 0}}">
+      <view class="total-text">合计：<text class="total-price">¥{{totalCartPrice}}</text></view>
+      <button class="checkout-btn" bindtap="goToCheckout">去结算</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,81 @@
+page {
+  min-height: 100%;
+  background: #f4f7f5;
+  color: #17211d;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  /* 预留自定义 TabBar 的高度与底部安全区 padding */
+  padding-bottom: calc(110rpx + env(safe-area-inset-bottom));
+}
+
+view, text, input, textarea, button, picker, switch {
+  box-sizing: border-box;
+}
+
+.page {
+  padding: 24rpx;
+}
+
+.card {
+  background: #ffffff;
+  border: 1rpx solid #e8eeeb;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 28rpx rgba(23, 107, 82, 0.06);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.muted { color: #7b8782; }
+.danger-text { color: #c8422e; }
+.success-text { color: #176b52; }
+
+button {
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+button::after { border: 0; }
+
+.primary {
+  color: #ffffff;
+  background: #176b52;
+}
+
+.secondary {
+  color: #176b52;
+  background: #e8f3ef;
+}
+
+.danger {
+  color: #c8422e;
+  background: #fff0ed;
+}
+
+.ghost {
+  color: #53615b;
+  background: #f2f5f3;
+}
+
+.section-title {
+  margin: 34rpx 0 18rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  color: #176b52;
+  background: #e8f3ef;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.safe-bottom { padding-bottom: calc(36rpx + env(safe-area-inset-bottom)); }

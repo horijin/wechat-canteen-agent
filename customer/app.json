@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/index/index",
+    "pages/stalls/stalls",
+    "pages/checkout/checkout",
+    "pages/order/order",
+    "pages/orderlist/orderlist",
+    "pages/ai-chat/ai-chat"
+  ],
+  "window": {
+    "navigationBarTitleText": "校园食堂订餐",
+    "navigationBarBackgroundColor": "#176b52",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f4f7f5",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

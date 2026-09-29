@@ -1,0 +1,83 @@
+/* 找到 .menu-page 将 padding-bottom 调小 */
+.menu-page {
+  min-height: 100vh;
+  padding-bottom: 60rpx !important;
+}
+
+/* 可以删掉 .save-bar、.save-copy、.save-button 的样式 */
+.toolbar { position: sticky; top: 0; z-index: 4; padding: 22rpx 24rpx 0; border-bottom: 1rpx solid #e7ece9; background: rgba(255,255,255,.97); }
+.date-row { display: flex; align-items: center; justify-content: space-between; }
+.title { font-size: 36rpx; font-weight: 800; }
+.subtitle { margin-top: 6rpx; color: #7b8782; font-size: 22rpx; }
+.date-picker { padding: 15rpx 20rpx; border-radius: 14rpx; color: #176b52; background: #edf6f2; font-size: 24rpx; font-weight: 600; }
+.meal-tabs { display: flex; margin-top: 22rpx; }
+.meal-tab { flex: 1; padding: 16rpx 0; border-bottom: 5rpx solid transparent; color: #77837e; text-align: center; }
+.meal-tab.active { border-color: #176b52; color: #176b52; font-weight: 700; }
+.content { padding: 22rpx 24rpx; }
+.summary { display: flex; justify-content: space-around; padding: 24rpx 12rpx; color: #728079; font-size: 23rpx; }
+.summary > view { flex: 1; text-align: center; }
+.summary > view:not(:last-child) { border-right: 1rpx solid #e7ece9; }
+.summary .value { color: #1c2823; font-size: 34rpx; font-weight: 800; }
+.tip { padding: 22rpx 4rpx; color: #79857f; font-size: 23rpx; line-height: 1.6; }
+.dish-card { margin-bottom: 20rpx; padding: 24rpx; }
+.dish-card.not-included { opacity: .76; }
+.dish-head { display: flex; align-items: center; }
+.dish-image, .dish-placeholder { flex: 0 0 100rpx; width: 100rpx; height: 100rpx; margin-right: 18rpx; border-radius: 18rpx; }
+.dish-placeholder { color: #176b52; background: #e4f1ec; font-size: 34rpx; font-weight: 800; line-height: 100rpx; text-align: center; }
+.dish-copy { flex: 1; min-width: 0; }
+.dish-name { font-size: 30rpx; font-weight: 750; }
+.dish-desc { overflow: hidden; margin-top: 7rpx; color: #7b8782; font-size: 22rpx; text-overflow: ellipsis; white-space: nowrap; }
+.energy { margin-top: 6rpx; color: #9a744a; font-size: 21rpx; }
+
+/* 已发布与下架按钮样式组 */
+/* menu.wxss */
+
+.published-action-group {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.published {
+  padding: 8rpx 14rpx;
+  border-radius: 999rpx;
+  color: #176b52;
+  background: #e6f2ed;
+  font-size: 21rpx;
+}
+
+.unpublish-btn {
+  width: 110rpx !important;
+  min-width: 110rpx !important;
+  height: 52rpx !important;
+  line-height: 50rpx !important;
+  margin: 0 0 0 16rpx !important;
+  padding: 0 !important;
+  font-size: 22rpx !important;
+  font-weight: 500 !important;
+  color: #d93025 !important;
+  background-color: #fff0f0 !important;
+  border: 1rpx solid #f5c6cb !important;
+  border-radius: 26rpx !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.unpublish-btn[disabled] {
+  opacity: 0.5;
+}
+
+.controls { margin-top: 22rpx; padding-top: 10rpx; border-top: 1rpx solid #edf0ee; }
+.control-row { display: flex; align-items: center; justify-content: space-between; min-height: 86rpx; border-bottom: 1rpx solid #f0f2f1; }
+.control-row.last { border-bottom: 0; }
+.control-label { color: #4d5b55; font-weight: 650; }
+.control-hint { margin-top: 5rpx; color: #99a29e; font-size: 21rpx; }
+.price-input { display: flex; align-items: center; width: 170rpx; height: 62rpx; padding: 0 14rpx; border-radius: 12rpx; background: #f2f5f3; }
+.price-input text { color: #79857f; }
+.price-input input { flex: 1; margin-left: 8rpx; text-align: right; }
+.stepper { display: flex; align-items: center; overflow: hidden; border: 1rpx solid #dde4e0; border-radius: 12rpx; }
+.step { width: 62rpx; height: 58rpx; color: #176b52; background: #f1f6f4; font-size: 33rpx; line-height: 58rpx; text-align: center; }
+.stepper input { width: 82rpx; height: 58rpx; text-align: center; }
+.loading { padding: 100rpx 0; color: #7b8782; text-align: center; }
+.error-card { margin-bottom: 20rpx; padding: 20rpx; border-radius: 16rpx; color: #a44128; background: #fff1ed; text-align: center; }

@@ -1,0 +1,36 @@
+<view class="order-card" bindtap="openDetail">
+  <view class="row top-row">
+    <view>
+      <text class="pickup-code">{{order.pickup_code}}</text>
+      <text class="order-number">#{{order.id}}</text>
+    </view>
+    <view class="status status-{{order._tone}}">{{order._statusText}}</view>
+  </view>
+
+  <view class="meta">
+    <text>{{order._diningText}}</text>
+    <text class="dot">·</text>
+    <text>{{order.requested_pickup_time || '尽快取餐'}}</text>
+    <text class="dot">·</text>
+    <text>{{order.customer_name || '顾客'}}</text>
+  </view>
+
+  <view class="items">
+    <view wx:for="{{order.items}}" wx:for-item="dish" wx:key="id" class="item-row">
+      <text class="dish-name">{{dish.dish_name}}</text>
+      <text>×{{dish.quantity}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{order.note}}" class="note">备注：{{order.note}}</view>
+
+  <view class="row footer">
+    <text class="time">{{order._createdAt}}</text>
+    <text class="amount">¥{{order._amount}}</text>
+  </view>
+
+  <view wx:if="{{showActions && order._nextStatus}}" class="actions" catchtap="noop">
+    <button wx:if="{{order.status === 'pending' || order.status === 'accepted'}}" class="danger" size="mini" loading="{{busy}}" catchtap="cancel">取消订单</button>
+    <button class="primary" size="mini" loading="{{busy}}" catchtap="advance">{{order._nextText}}</button>
+  </view>
+</view>

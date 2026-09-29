@@ -1,0 +1,29 @@
+<view class="orders-page safe-bottom">
+  <view class="filter-panel">
+    <view class="date-row">
+      <view>
+        <view class="title">订单中心</view>
+        <view class="subtitle">{{session.stallName}}<text wx:if="{{lastUpdated}}"> · {{lastUpdated}} 更新</text></view>
+      </view>
+      <picker mode="date" value="{{date}}" bindchange="chooseDate">
+        <view class="date-picker">{{date}} ›</view>
+      </picker>
+    </view>
+    <scroll-view class="filters" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="filter-line">
+        <view wx:for="{{filters}}" wx:key="key" class="filter {{filter === item.key ? 'active' : ''}}" data-status="{{item.key}}" bindtap="chooseFilter">
+          {{item.name}}<text class="count">{{item.count}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="content">
+    <view wx:if="{{error}}" class="error-card" bindtap="refresh">{{error}}，点击重试</view>
+    <view wx:if="{{loading && !orders.length}}" class="loading">正在同步订单…</view>
+    <empty-state wx:elif="{{!orders.length}}" title="当前没有订单" description="可以切换状态或日期查看其他订单" />
+    <block wx:else>
+      <order-card wx:for="{{orders}}" wx:key="id" order="{{item}}" busy="{{busyOrderId === item.id}}" binddetail="openDetail" bindadvance="advance" bindcancel="cancel" />
+    </block>
+  </view>
+</view>

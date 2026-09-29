@@ -1,0 +1,65 @@
+<view class="page safe-bottom">
+  <view class="hero card">
+    <view class="row">
+      <view>
+        <view class="canteen">{{session.canteenName}}</view>
+        <view class="stall-name">{{stall.name || session.stallName}}</view>
+      </view>
+      <view class="open-status {{stall.is_open ? 'open' : 'closed'}}">
+        <view class="status-dot"></view>{{stall.is_open ? '营业中' : '暂停营业'}}
+      </view>
+    </view>
+    <view class="date">{{date}} · 今日经营概览</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error-card" bindtap="refresh">{{error}}，点击重试</view>
+
+  <view class="section-title">订单概览</view>
+  <view class="stats-grid">
+    <view class="stat-card urgent" data-status="pending" bindtap="openOrders">
+      <view class="stat-value">{{stats.pending}}</view>
+      <view class="stat-label">待接单</view>
+    </view>
+    <view class="stat-card" data-status="preparing" bindtap="openOrders">
+      <view class="stat-value">{{stats.preparing}}</view>
+      <view class="stat-label">制作中</view>
+    </view>
+    <view class="stat-card ready" data-status="ready" bindtap="openOrders">
+      <view class="stat-value">{{stats.ready}}</view>
+      <view class="stat-label">待取餐</view>
+    </view>
+    <view class="stat-card" data-status="completed" bindtap="openOrders">
+      <view class="stat-value">{{stats.completed}}</view>
+      <view class="stat-label">已完成</view>
+    </view>
+  </view>
+
+  <view class="revenue card">
+    <view>
+      <view class="revenue-label">今日已完成营业额</view>
+      <view class="revenue-value"><text>¥</text>{{stats.revenue}}</view>
+    </view>
+    <view class="order-total">共 {{stats.total}} 笔订单</view>
+  </view>
+
+  <view class="quick-grid">
+    <view class="quick card" bindtap="openMenu">
+      <view class="quick-icon">菜</view>
+      <view><view class="quick-title">今日菜单</view><view class="quick-desc">上架与调整库存</view></view>
+    </view>
+    <view class="quick card" data-status="active" bindtap="openOrders">
+      <view class="quick-icon orange">单</view>
+      <view><view class="quick-title">处理订单</view><view class="quick-desc">查看全部进行中</view></view>
+    </view>
+  </view>
+
+  <view class="row section-heading">
+    <view class="section-title">待处理订单</view>
+    <view class="more" data-status="active" bindtap="openOrders">查看全部 ›</view>
+  </view>
+  <view wx:if="{{loading && !recentOrders.length}}" class="loading">正在同步订单…</view>
+  <empty-state wx:elif="{{!recentOrders.length}}" title="没有待处理订单" description="新订单到达后会在这里显示" />
+  <block wx:else>
+    <order-card wx:for="{{recentOrders}}" wx:key="id" order="{{item}}" show-actions="{{false}}" binddetail="openDetail" />
+  </block>
+</view>

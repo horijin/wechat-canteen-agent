@@ -1,0 +1,29 @@
+<view class="tab-bar-container">
+  <view class="tab-bar">
+    <view 
+      wx:for="{{list}}" 
+      wx:key="index" 
+      class="tab-item {{selected === index ? 'active' : ''}}" 
+      data-path="{{item.pagePath}}" 
+      data-index="{{index}}" 
+      bindtap="switchTab"
+    >
+      <view class="icon-wrapper">
+        <!-- 纯文本/符号小图标 -->
+        <view class="symbol-icon">
+          <text wx:if="{{index === 0}}">田</text>
+          <text wx:elif="{{index === 1}}">单</text>
+          <text wx:elif="{{index === 2}}">菜</text>
+          <text wx:elif="{{index === 3}}">设</text>
+        </view>
+
+        <!-- 角标 -->
+        <view wx:if="{{index === 1 && badgeCount > 0}}" class="badge">
+          {{badgeCount > 99 ? '99+' : badgeCount}}
+        </view>
+      </view>
+
+      <text class="tab-text">{{item.text}}</text>
+    </view>
+  </view>
+</view>

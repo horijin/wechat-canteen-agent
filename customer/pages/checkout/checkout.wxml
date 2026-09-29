@@ -1,0 +1,20 @@
+<view class="page" wx:if="{{order}}">
+  <view class="card">
+    <view class="section-title">{{order.stallName}}</view>
+    <view wx:for="{{order.items}}" wx:key="daily_menu_id" class="row item-row">
+      <text>{{item.name}} × {{item.quantity}}</text><text>¥{{item.price * item.quantity}}</text>
+    </view>
+    <view class="row total-row"><text>合计</text><text class="price">¥{{order.total}}</text></view>
+  </view>
+  <view class="card">
+    <view class="field"><text class="label">姓名</text><input class="input" value="{{customerName}}" data-field="customerName" bindinput="inputField" placeholder="请输入姓名" /></view>
+    <view class="field"><text class="label">学号 / 工号</text><input class="input" value="{{customerNo}}" data-field="customerNo" bindinput="inputField" placeholder="用于查询自己的订单" /></view>
+    <view class="field"><text class="label">取餐方式</text>
+      <view class="choices"><view class="choice {{diningType === 'dine_in' ? 'selected' : ''}}" data-type="dine_in" bindtap="chooseDining">堂食</view><view class="choice {{diningType === 'takeaway' ? 'selected' : ''}}" data-type="takeaway" bindtap="chooseDining">打包</view></view>
+    </view>
+    <view class="field"><text class="label">预约取餐时间</text><picker mode="time" value="{{pickupTime}}" bindchange="chooseTime"><view class="input">{{pickupTime}}</view></picker></view>
+    <view class="field"><text class="label">备注</text><input class="input" value="{{note}}" data-field="note" bindinput="inputField" placeholder="例如：少辣、不放香菜" /></view>
+  </view>
+  <button class="primary" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">提交订单（无需支付）</button>
+</view>
+

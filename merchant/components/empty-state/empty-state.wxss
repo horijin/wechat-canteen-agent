@@ -1,0 +1,5 @@
+.empty-wrap { padding: 100rpx 32rpx; text-align: center; color: #7b8782; }
+.empty-icon { width: 88rpx; height: 88rpx; margin: 0 auto 24rpx; border: 4rpx solid #bed1c9; border-radius: 50%; color: #91aaa0; font-size: 54rpx; line-height: 78rpx; }
+.empty-title { color: #3f4c46; font-size: 30rpx; font-weight: 700; }
+.empty-description { margin-top: 12rpx; line-height: 1.6; }
+.empty-action { display: inline-flex; margin-top: 26rpx; }

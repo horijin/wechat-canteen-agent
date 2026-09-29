@@ -1,0 +1,2 @@
+"""School cafeteria ordering backend."""
+

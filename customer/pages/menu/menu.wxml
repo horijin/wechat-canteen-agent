@@ -1,0 +1,248 @@
+<view class="page-container">
+
+<!-- 1. 顶部食堂选择 Tab 栏 -->
+<view class="canteen-header">
+  <view class="canteen-tabs">
+    <view 
+      wx:for="{{canteens}}" 
+      wx:key="id" 
+      class="tab-item {{item.id === selectedCanteenId ? 'active' : ''}}"
+      bindtap="onSelectCanteen" 
+      data-id="{{item.id}}"
+    >
+      {{item.name}}
+    </view>
+  </view>
+</view>
+
+<!-- 2. 全宽 AI 智能选菜入口 Banner -->
+<view class="ai-banner-full" bindtap="goToAIChat">
+  <view class="ai-banner-left">
+    <view class="ai-icon">✨</view>
+    <view class="ai-info">
+      <text class="ai-title">AI 智能选菜帮手</text>
+      <text class="ai-sub">不知道吃什么？告诉我你的喜好与预算...</text>
+    </view>
+  </view>
+  <text class="ai-arrow">›</text>
+</view>
+
+<!-- 3. 主体左右联动区域 -->
+<view class="menu-body">
+
+  <!-- 左侧档口导航 -->
+  <scroll-view class="sidebar" scroll-y>
+    <view 
+      wx:for="{{stalls}}" 
+      wx:key="id"
+      class="stall-node {{item.id === currentStallId ? 'active' : ''}}"
+      bindtap="onSelectStall"
+      data-id="{{item.id}}"
+    >
+      <view class="stall-name">{{item.name}}</view>
+      <view class="stall-badge">{{item.floor}}</view>
+    </view>
+    <view wx:if="{{stalls.length === 0}}" class="empty-side">无档口</view>
+  </scroll-view>
+
+  <!-- 右侧菜品列表 -->
+  <scroll-view class="main-content" scroll-y>
+    <view class="dish-list">
+      
+      <!-- 骨架屏加载状态 -->
+      <view class="skeleton-container fade-in" wx:if="{{loading}}">
+        <view class="skeleton-dish-card" wx:for="{{[1, 2, 3, 4]}}" wx:key="*this">
+          <view class="skeleton-thumb"></view>
+          <view class="skeleton-content">
+            <view class="skeleton-block skeleton-title"></view>
+            <view class="skeleton-block skeleton-line"></view>
+            <view class="skeleton-block skeleton-price"></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 实际菜品列表 -->
+      <view class="fade-in" wx:if="{{!loading}}">
+        <view 
+          class="dish-card" 
+          wx:for="{{dailyMenuList}}" 
+          wx:key="id"
+          bindtap="onOpenDishDetail"
+          data-item="{{item}}"
+        >
+          <image class="dish-thumb" src="{{item.image_url}}" mode="aspectFill" />
+          
+          <view class="dish-details">
+            <view class="dish-title-row">
+              <text class="dish-title">{{item.name}}</text>
+              <text class="energy-tag" wx:if="{{item.energy_kcal}}">🔥 {{item.energy_kcal}} kcal</text>
+            </view>
+            
+            <view class="dish-desc">{{item.description}}</view>
+            
+            <!-- 库存提示 -->
+            <view class="dish-stock-container">
+              <text class="stock-warn" wx:if="{{item.is_available && item.stock > 0 && item.stock < 5}}">仅剩 {{item.stock}} 份</text>
+              <text class="stock-soldout" wx:elif="{{!item.is_available || item.stock <= 0}}">已售罄</text>
+            </view>
+            
+            <view class="dish-action-row">
+              <view class="dish-price">
+                <text class="symbol">¥</text>
+                <text class="amount">{{item.price}}</text>
+              </view>
+              
+              <view class="stepper">
+                <button 
+                  class="btn-step btn-minus" 
+                  wx:if="{{cartMap[item.id]}}" 
+                  catchtap="onUpdateQuantity" 
+                  data-item="{{item}}" 
+                  data-delta="{{-1}}"
+                >-</button>
+                
+                <text class="step-val" wx:if="{{cartMap[item.id]}}">{{cartMap[item.id].quantity}}</text>
+                
+                <button 
+                  class="btn-step btn-plus" 
+                  disabled="{{!item.is_available || item.stock <= 0}}"
+                  catchtap="onUpdateQuantity" 
+                  data-item="{{item}}" 
+                  data-delta="{{1}}"
+                >+</button>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{dailyMenuList.length === 0 && !loading}}" class="empty-content fade-in">
+        <text>🍱 该档口今日未开售</text>
+      </view>
+
+    </view>
+  </scroll-view>
+
+</view>
+
+<!-- 4. 统一遮罩层 -->
+<view 
+  class="cart-mask {{(showCartDrawer || showDishDetail) ? 'show' : ''}}" 
+  bindtap="closeAllMasks"
+></view>
+
+<!-- 5. 菜品营养详情 BottomSheet -->
+<view class="dish-detail-drawer {{showDishDetail ? 'show' : ''}}">
+  <view class="detail-close-btn" bindtap="onCloseDishDetail">✕</view>
+  
+  <scroll-view class="detail-scroll-view" scroll-y>
+    <view class="detail-header" wx:if="{{selectedDish}}">
+      <image class="detail-cover" src="{{selectedDish.image_url}}" mode="aspectFill" />
+      <view class="detail-main-info">
+        <view class="detail-title">{{selectedDish.name}}</view>
+        <view class="detail-desc">{{selectedDish.description || '暂无详细介绍'}}</view>
+        <view class="detail-price-row">
+          <text class="detail-price">¥{{selectedDish.price}}</text>
+          <text class="detail-kcal" wx:if="{{selectedDish.energy_kcal}}">🔥 约 {{selectedDish.energy_kcal}} kcal/份</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 营养成分估算卡片 -->
+    <view class="nutrition-section" wx:if="{{selectedDish && selectedDish.nutrition}}">
+      <view class="section-title">📊 预估营养成分</view>
+      <view class="nutrition-grid">
+        <view class="nutrition-card">
+          <text class="val">{{selectedDish.nutrition.protein_g || 0}}g</text>
+          <text class="lbl">蛋白质</text>
+        </view>
+        <view class="nutrition-card">
+          <text class="val">{{selectedDish.nutrition.fat_g || 0}}g</text>
+          <text class="lbl">脂肪</text>
+        </view>
+        <view class="nutrition-card">
+          <text class="val">{{selectedDish.nutrition.carbs_g || 0}}g</text>
+          <text class="lbl">碳水</text>
+        </view>
+        <view class="nutrition-card">
+          <text class="val">{{selectedDish.nutrition.sodium_mg || 0}}mg</text>
+          <text class="lbl">钠</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部独立“加入购物车”栏 -->
+  <view class="detail-bottom-bar" wx:if="{{selectedDish}}">
+    <button 
+      class="btn-detail-add" 
+      disabled="{{!selectedDish.is_available || selectedDish.stock <= 0}}"
+      bindtap="onUpdateQuantity" 
+      data-item="{{selectedDish}}" 
+      data-delta="{{1}}"
+    >
+      {{(!selectedDish.is_available || selectedDish.stock <= 0) ? '已售罄' : '加入购物车'}}
+    </button>
+  </view>
+</view>
+
+<!-- 6. 购物车明细 BottomSheet -->
+<view class="cart-drawer {{showCartDrawer ? 'show' : ''}}">
+  <view class="drawer-header">
+    <view class="drawer-title">已选菜品 <text class="drawer-subtitle">(来自不同档口将自动拆单)</text></view>
+    <view class="clear-btn" bindtap="onClearCart">
+      <text class="icon">🗑️</text> 清空购物车
+    </view>
+  </view>
+
+  <scroll-view class="drawer-list" scroll-y>
+    <view class="cart-item-row" wx:for="{{cartList}}" wx:key="daily_menu_id">
+      <view class="cart-item-info">
+        <view class="cart-item-name">{{item.dish_name}}</view>
+        <view class="cart-item-stall">{{item.canteen_name}} - {{item.stall_name}}</view>
+      </view>
+      <!-- 显示单价而非总价 -->
+      <view class="cart-item-price">¥{{item.price}}</view>
+      
+      <view class="stepper">
+        <button 
+          class="btn-step btn-minus" 
+          bindtap="onUpdateCartQuantityByMenuId" 
+          data-menuid="{{item.daily_menu_id}}" 
+          data-delta="{{-1}}"
+        >-</button>
+        <text class="step-val">{{item.quantity}}</text>
+        <button 
+          class="btn-step btn-plus" 
+          bindtap="onUpdateCartQuantityByMenuId" 
+          data-menuid="{{item.daily_menu_id}}" 
+          data-delta="{{1}}"
+        >+</button>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 7. 底部悬浮购物车固定 Bar -->
+<view class="cart-bar {{totalCount > 0 ? 'active' : ''}}">
+  <view class="cart-left" bindtap="toggleCartDrawer">
+    <view class="badge-box">
+      <text class="icon">🛒</text>
+      <view class="badge" wx:if="{{totalCount > 0}}">{{totalCount}}</view>
+    </view>
+    <view class="cart-total" wx:if="{{totalCount > 0}}">
+      <text class="total-label">合计：</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+    <view class="cart-total" wx:else>
+      <text class="empty-tip-text">未选购菜品</text>
+    </view>
+  </view>
+  <button 
+    class="btn-checkout" 
+    disabled="{{totalCount === 0}}" 
+    bindtap="onSubmitOrder"
+  >去结算</button>
+</view>
+
+</view>

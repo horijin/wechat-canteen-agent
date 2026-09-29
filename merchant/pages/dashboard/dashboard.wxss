@@ -1,0 +1,29 @@
+.hero { padding: 30rpx; color: #fff; background: linear-gradient(135deg, #176b52, #0e513e); border: 0; }
+.canteen { color: rgba(255,255,255,.72); font-size: 24rpx; }
+.stall-name { margin-top: 8rpx; font-size: 40rpx; font-weight: 800; }
+.date { margin-top: 28rpx; color: rgba(255,255,255,.78); font-size: 24rpx; }
+.open-status { display: flex; align-items: center; gap: 10rpx; padding: 10rpx 16rpx; border-radius: 999rpx; background: rgba(255,255,255,.13); font-size: 23rpx; }
+.status-dot { width: 13rpx; height: 13rpx; border-radius: 50%; background: #7ee0a9; }
+.closed .status-dot { background: #ffad97; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12rpx; }
+.stat-card { padding: 24rpx 8rpx 20rpx; border: 1rpx solid #e4eae7; border-radius: 20rpx; background: #fff; text-align: center; }
+.stat-value { font-size: 42rpx; font-weight: 800; }
+.stat-label { margin-top: 8rpx; color: #7b8782; font-size: 22rpx; }
+.urgent .stat-value { color: #c36b13; }
+.ready .stat-value { color: #3d7b1f; }
+.revenue { display: flex; align-items: center; justify-content: space-between; margin-top: 20rpx; padding: 28rpx; }
+.revenue-label { color: #6e7b75; font-size: 24rpx; }
+.revenue-value { margin-top: 8rpx; font-size: 46rpx; font-weight: 800; }
+.revenue-value text { margin-right: 5rpx; font-size: 27rpx; }
+.order-total { color: #7b8782; }
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; margin-top: 20rpx; }
+.quick { display: flex; align-items: center; gap: 18rpx; padding: 25rpx 20rpx; }
+.quick-icon { width: 68rpx; height: 68rpx; border-radius: 18rpx; color: #176b52; background: #e4f3ed; font-size: 28rpx; font-weight: 800; line-height: 68rpx; text-align: center; }
+.quick-icon.orange { color: #a05813; background: #fff0dc; }
+.quick-title { font-weight: 700; }
+.quick-desc { margin-top: 7rpx; color: #87928d; font-size: 21rpx; }
+.section-heading { align-items: flex-end; }
+.section-heading .section-title { margin-bottom: 18rpx; }
+.more { padding-bottom: 20rpx; color: #176b52; font-size: 24rpx; }
+.loading { padding: 60rpx 0; color: #7b8782; text-align: center; }
+.error-card { margin-top: 20rpx; padding: 20rpx; border-radius: 16rpx; color: #a44128; background: #fff1ed; text-align: center; }

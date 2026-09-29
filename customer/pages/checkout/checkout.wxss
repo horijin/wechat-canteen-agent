@@ -1,0 +1,7 @@
+.section-title { font-size: 34rpx; font-weight: 700; margin-bottom: 20rpx; }
+.item-row { padding: 14rpx 0; }
+.total-row { border-top: 1rpx solid #edf0ee; margin-top: 14rpx; padding-top: 22rpx; }
+.choices { display: flex; gap: 20rpx; }
+.choice { flex: 1; text-align: center; background: #f2f5f3; padding: 22rpx; border-radius: 16rpx; }
+.choice.selected { background: #e1f1eb; color: #176b52; border: 2rpx solid #176b52; }
+

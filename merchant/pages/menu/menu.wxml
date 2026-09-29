@@ -1,0 +1,100 @@
+<view class="menu-page safe-bottom">
+  <view class="toolbar">
+    <view class="row date-row">
+      <view>
+        <view class="title">菜单与库存</view>
+        <view class="subtitle">{{session.stallName}}</view>
+      </view>
+      <picker mode="date" value="{{date}}" bindchange="chooseDate">
+        <view class="date-picker">{{date}} ›</view>
+      </picker>
+    </view>
+    <view class="meal-tabs">
+      <view wx:for="{{mealPeriods}}" wx:key="key" class="meal-tab {{mealPeriod === item.key ? 'active' : ''}}" data-period="{{item.key}}" bindtap="chooseMeal">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="content">
+    <!-- 顶部数据汇总 -->
+    <view class="summary card">
+      <view><text class="value">{{summary.included}}</text><text> 道菜单</text></view>
+      <view><text class="value">{{summary.available}}</text><text> 道供应</text></view>
+      <view><text class="value">{{summary.stock}}</text><text> 份库存</text></view>
+    </view>
+
+    <view class="tip">开启右侧开关可直接将菜品加入当前餐次并发布；已发布的菜品改动将实时生效。</view>
+    <view wx:if="{{error}}" class="error-card" bindtap="loadMenu">{{error}}，点击重试</view>
+    <view wx:if="{{loading && !rows.length}}" class="loading">正在读取菜单…</view>
+    <empty-state wx:elif="{{!rows.length}}" title="菜品库为空" description="当前后端尚未提供菜品新增接口，请先在后台录入菜品" />
+
+    <!-- 菜品列表 -->
+    <view wx:for="{{rows}}" wx:key="dishId" class="dish-card card {{item.existing ? '' : 'not-included'}}">
+      <view class="dish-head">
+        <image wx:if="{{item.imageUrl}}" class="dish-image" src="{{item.imageUrl}}" mode="aspectFill" />
+        <view wx:else class="dish-placeholder">菜</view>
+        <view class="dish-copy">
+          <view class="dish-name">{{item.name}}</view>
+          <view class="dish-desc">{{item.description}}</view>
+        </view>
+        
+        <!-- 已发布状态：显示“已发布”绿色标签 + “下架”按钮 -->
+        <view wx:if="{{item.existing}}" class="published-action-group">
+          <text class="published">已发布</text>
+          <button 
+            class="unpublish-btn" 
+            data-index="{{index}}" 
+            disabled="{{busyMenuId === item.menuId}}" 
+            bindtap="unpublishDish"
+          >下架</button>
+        </view>
+        
+        <!-- 未发布 / 已下架状态：显示开启开关（开启即发布） -->
+        <switch wx:else checked="{{item.included}}" color="#176b52" data-index="{{index}}" bindchange="toggleIncluded" />
+      </view>
+
+      <!-- 仅对已发布的菜品展示 价格/库存/正常供应 控制选项 -->
+      <view wx:if="{{item.existing}}" class="controls">
+        <view class="control-row">
+          <text class="control-label">售价</text>
+          <view class="price-input">
+            <text>¥</text>
+            <input 
+              type="digit" 
+              value="{{item.price}}" 
+              data-index="{{index}}" 
+              data-field="price" 
+              bindinput="inputField" 
+              bindblur="commitPrice" 
+            />
+          </view>
+        </view>
+
+        <view class="control-row">
+          <text class="control-label">库存</text>
+          <view class="stepper">
+            <view class="step" data-index="{{index}}" data-delta="-1" bindtap="changeStock">−</view>
+            <input 
+              type="number" 
+              value="{{item.stock}}" 
+              data-index="{{index}}" 
+              data-field="stock" 
+              bindinput="inputField" 
+              bindblur="commitStockBlur" 
+            />
+            <view class="step" data-index="{{index}}" data-delta="1" bindtap="changeStock">＋</view>
+          </view>
+        </view>
+
+        <view class="control-row last">
+          <view>
+            <view class="control-label">正常供应</view>
+            <view class="control-hint">关闭后顾客端不可下单</view>
+          </view>
+          <view class="action-group">
+            <switch checked="{{item.available}}" color="#176b52" disabled="{{item.menuId && busyMenuId === item.menuId}}" data-index="{{index}}" bindchange="toggleAvailable" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,38 @@
+.detail-page { padding-bottom: 170rpx; }
+.loading { padding: 160rpx 0; color: #7b8782; text-align: center; }
+.error-box { padding: 60rpx 30rpx; border-radius: 20rpx; color: #a44128; background: #fff1ed; text-align: center; }
+.error-box button { margin-top: 24rpx; }
+.status-hero { padding: 40rpx 30rpx; border-radius: 26rpx; text-align: center; }
+.status-warning { color: #89490e; background: #fff0d8; }
+.status-info { color: #165b91; background: #e9f4ff; }
+.status-primary { color: #0f5c46; background: #dcf0e8; }
+.status-success { color: #326b19; background: #eaf6e3; }
+.status-danger { color: #a63424; background: #ffebe7; }
+.status-neutral { color: #55625d; background: #e9eeeb; }
+.status-label { font-size: 28rpx; font-weight: 700; }
+.pickup-code { margin-top: 12rpx; font-size: 72rpx; font-weight: 900; letter-spacing: 2rpx; }
+.pickup-hint { opacity: .7; font-size: 22rpx; }
+.section { margin-top: 22rpx; padding: 28rpx; }
+.section-heading { margin-bottom: 22rpx; font-size: 30rpx; font-weight: 800; }
+.timeline { display: flex; justify-content: space-between; }
+.timeline-item { position: relative; display: flex; flex: 1; flex-direction: column; align-items: center; color: #a1aaa6; text-align: center; }
+.timeline-item:not(:last-child)::after { position: absolute; top: 17rpx; left: 58%; width: 84%; height: 3rpx; background: #e0e6e3; content: ''; }
+.timeline-dot { position: relative; z-index: 1; width: 36rpx; height: 36rpx; border: 4rpx solid #d8dfdc; border-radius: 50%; background: #fff; font-size: 20rpx; line-height: 29rpx; }
+.timeline-text { margin-top: 12rpx; font-size: 19rpx; }
+.timeline-item.done, .timeline-item.current { color: #176b52; }
+.timeline-item.done .timeline-dot { color: #fff; border-color: #176b52; background: #176b52; }
+.timeline-item.current .timeline-dot { border: 9rpx solid #176b52; }
+.timeline-item.done:not(:last-child)::after { background: #8bbcac; }
+.dish-row { display: flex; justify-content: space-between; padding: 18rpx 0; border-bottom: 1rpx solid #edf0ee; }
+.dish-name { font-weight: 650; }
+.unit-price { margin-top: 8rpx; color: #84908b; font-size: 23rpx; }
+.subtotal { font-weight: 700; }
+.total-row { display: flex; justify-content: space-between; padding-top: 24rpx; }
+.total { font-size: 34rpx; font-weight: 800; }
+.info-row { display: flex; justify-content: space-between; padding: 16rpx 0; color: #66736d; }
+.info-row text:last-child { max-width: 68%; color: #202a26; text-align: right; }
+.note { margin-top: 14rpx; padding: 18rpx; border-radius: 14rpx; color: #a44128; background: #fff4ef; }
+.action-bar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 5; display: flex; gap: 18rpx; padding: 18rpx 24rpx calc(18rpx + env(safe-area-inset-bottom)); border-top: 1rpx solid #e4e9e6; background: #fff; }
+.action-bar button { height: 84rpx; line-height: 84rpx; }
+.cancel-button { flex: 0 0 190rpx; }
+.next-button { flex: 1; }

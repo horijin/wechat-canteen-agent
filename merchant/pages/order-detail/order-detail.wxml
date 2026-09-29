@@ -1,0 +1,49 @@
+<view class="page detail-page safe-bottom">
+  <view wx:if="{{loading}}" class="loading">正在读取订单…</view>
+  <view wx:elif="{{error}}" class="error-box">
+    <view>{{error}}</view>
+    <button class="secondary" size="mini" bindtap="loadOrder">重新加载</button>
+  </view>
+  <block wx:else>
+    <view class="status-hero status-{{order._tone}}">
+      <view class="status-label">{{order._statusText}}</view>
+      <view class="pickup-code">{{order.pickup_code}}</view>
+      <view class="pickup-hint">取餐号</view>
+    </view>
+
+    <view class="card section">
+      <view class="section-heading">订单进度</view>
+      <view class="timeline">
+        <view wx:for="{{order._timeline}}" wx:key="key" class="timeline-item {{item.state}}">
+          <view class="timeline-dot">{{item.state === 'done' ? '✓' : ''}}</view>
+          <view class="timeline-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section">
+      <view class="section-heading">菜品明细</view>
+      <view wx:for="{{order.items}}" wx:key="id" class="dish-row">
+        <view>
+          <view class="dish-name">{{item.dish_name}}</view>
+          <view class="unit-price">¥{{item.unit_price}} × {{item.quantity}}</view>
+        </view>
+        <view class="subtotal">¥{{item.subtotal}}</view>
+      </view>
+      <view class="total-row"><text>订单金额</text><text class="total">¥{{order._amount}}</text></view>
+    </view>
+
+    <view class="card section info-list">
+      <view class="info-row"><text>顾客</text><text>{{order.customer_name || '--'}}</text></view>
+      <view class="info-row"><text>就餐方式</text><text>{{order._diningText}}</text></view>
+      <view class="info-row"><text>期望取餐</text><text>{{order.requested_pickup_time || '尽快'}}</text></view>
+      <view class="info-row"><text>下单时间</text><text>{{order._createdAt}}</text></view>
+      <view wx:if="{{order.note}}" class="note">备注：{{order.note}}</view>
+    </view>
+
+    <view wx:if="{{order._nextStatus}}" class="action-bar">
+      <button wx:if="{{order.status === 'pending' || order.status === 'accepted'}}" class="danger cancel-button" disabled="{{busy}}" bindtap="cancel">取消</button>
+      <button class="primary next-button" loading="{{busy}}" bindtap="advance">{{order._nextText}}</button>
+    </view>
+  </block>
+</view>

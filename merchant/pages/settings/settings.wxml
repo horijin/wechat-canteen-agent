@@ -1,0 +1,45 @@
+<view class="page settings-page safe-bottom">
+  <view class="profile card">
+    <view class="avatar">{{avatarText}}</view>
+    <view class="profile-copy">
+      <view class="stall-name">{{stall.name || session.stallName}}</view>
+      <view class="canteen-name">{{session.canteenName}} · 档口 ID {{session.stallId}}</view>
+    </view>
+    <view class="business-state {{stall.is_open ? 'open' : 'closed'}}">{{stall.is_open ? '营业中' : '已停业'}}</view>
+  </view>
+
+  <view class="section-title">服务连接</view>
+  <view class="card setting-card">
+    <view class="label">后端 API 地址</view>
+    <input class="api-input" value="{{apiBaseUrl}}" bindinput="inputApiBase" placeholder="https://api.example.com" />
+    <view class="row connection-row">
+      <view class="connection {{serviceState}}"><view class="dot"></view>{{serviceText}}</view>
+      <view>
+        <button class="ghost small-button" size="mini" bindtap="saveServer">仅保存</button>
+        <button class="secondary small-button" size="mini" loading="{{testing}}" bindtap="testServer">保存并检测</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-title">订单提醒</view>
+  <view class="card setting-card setting-row">
+    <view>
+      <view class="label">新订单震动</view>
+      <view class="description">订单页或工作台可见时收到新单提醒</view>
+    </view>
+    <switch checked="{{preferences.vibrateOnNewOrder}}" color="#176b52" bindchange="toggleVibration" />
+  </view>
+
+  <view class="section-title">上线检查</view>
+  <view class="card setting-card checklist" bindtap="showProductionTip">
+    <view class="check-icon">!</view>
+    <view class="check-copy">
+      <view class="label">商家鉴权尚未接入</view>
+      <view class="description">当前按档口进入，仅用于联调与演示</view>
+    </view>
+    <view class="chevron">›</view>
+  </view>
+
+  <button class="danger switch-button" bindtap="changeStall">切换经营档口</button>
+  <view class="version">Merchant Mini Program · v1.0.0</view>
+</view>

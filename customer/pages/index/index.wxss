@@ -1,0 +1,87 @@
+/* pages/index/index.wxss */
+.hero {
+  background: #176b52;
+  color: #ffffff;
+  padding: 64rpx 32rpx 72rpx;
+  border-bottom-left-radius: 32rpx;
+  border-bottom-right-radius: 32rpx;
+}
+
+.hero .title {
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+}
+
+.hero .subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28rpx;
+  margin-top: 12rpx;
+}
+
+.canteen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.canteen-hover {
+  opacity: 0.85;
+  transform: scale(0.99);
+}
+
+.canteen-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #17211d;
+}
+
+.arrow {
+  font-size: 48rpx;
+  color: #a8b4af;
+  font-weight: 300;
+}
+
+.merchant-entry {
+  margin-top: 50rpx;
+  background: #e8f4ef;
+  color: #176b52;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+}
+
+/* 骨架屏占位动画 */
+.skeleton-container {
+  width: 100%;
+}
+
+.skeleton-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-title {
+  width: 40%;
+  height: 36rpx;
+  background: #e2e8e5;
+  border-radius: 8rpx;
+}
+
+.skeleton-subtitle {
+  width: 65%;
+  height: 26rpx;
+  background: #edf2f0;
+  border-radius: 6rpx;
+  margin-top: 16rpx;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+

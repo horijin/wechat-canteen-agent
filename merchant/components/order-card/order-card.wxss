@@ -1,0 +1,25 @@
+.order-card { margin-bottom: 20rpx; padding: 26rpx; background: #fff; border: 1rpx solid #e8eeeb; border-radius: 24rpx; box-shadow: 0 8rpx 26rpx rgba(23, 107, 82, .05); }
+.row { display: flex; align-items: center; justify-content: space-between; }
+.top-row { align-items: flex-start; }
+.pickup-code { font-size: 46rpx; font-weight: 800; letter-spacing: 1rpx; }
+.order-number { margin-left: 14rpx; color: #98a39f; font-size: 24rpx; }
+.status { padding: 8rpx 16rpx; border-radius: 999rpx; font-size: 24rpx; font-weight: 700; }
+.status-warning { color: #a05813; background: #fff2df; }
+.status-info { color: #21649b; background: #eaf4ff; }
+.status-primary { color: #176b52; background: #e7f3ef; }
+.status-success { color: #39731d; background: #edf7e6; }
+.status-danger { color: #b43e2c; background: #ffefec; }
+.status-neutral { color: #65736d; background: #edf1ef; }
+.meta { display: flex; flex-wrap: wrap; margin: 16rpx 0 18rpx; color: #65736d; font-size: 25rpx; }
+.dot { margin: 0 10rpx; }
+.items { padding: 14rpx 0; border-top: 1rpx solid #edf0ee; }
+.item-row { display: flex; justify-content: space-between; padding: 7rpx 0; color: #34423c; }
+.dish-name { max-width: 82%; font-weight: 600; }
+.note { margin-top: 8rpx; padding: 14rpx 16rpx; border-radius: 12rpx; color: #a44128; background: #fff4ef; line-height: 1.5; }
+.footer { margin-top: 18rpx; }
+.time { color: #98a39f; font-size: 23rpx; }
+.amount { font-size: 30rpx; font-weight: 750; }
+.actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid #edf0ee; }
+.actions button { margin: 0; min-width: 156rpx; }
+.primary { color: #fff; background: #176b52; }
+.danger { color: #c8422e; background: #fff0ed; }

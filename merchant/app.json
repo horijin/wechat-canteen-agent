@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/dashboard/dashboard",
+    "pages/orders/orders",
+    "pages/menu/menu",
+    "pages/settings/settings",
+    "pages/order-detail/order-detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#176b52",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "食堂商家端",
+    "backgroundColor": "#f4f7f5",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#7b8782",
+    "selectedColor": "#176b52",
+    "backgroundColor": "#ffffff",
+    "list": [
+      { "pagePath": "pages/dashboard/dashboard", "text": "工作台" },
+      { "pagePath": "pages/orders/orders", "text": "订单" },
+      { "pagePath": "pages/menu/menu", "text": "菜单" },
+      { "pagePath": "pages/settings/settings", "text": "设置" }
+    ]
+  },
+  "networkTimeout": {
+    "request": 12000,
+    "uploadFile": 30000
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,4 @@
+{
+  "desc": "商家端页面不参与微信索引",
+  "rules": [{ "action": "disallow", "page": "*" }]
+}

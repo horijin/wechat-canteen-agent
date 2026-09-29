@@ -1,0 +1,50 @@
+<view class="login-page">
+  <view class="brand">
+    <view class="brand-mark">餐</view>
+    <view class="brand-copy">
+      <view class="brand-title">食堂商家工作台</view>
+      <view class="brand-subtitle">订单、出餐与库存集中管理</view>
+    </view>
+  </view>
+
+  <view class="card panel">
+    <view class="eyebrow">经营身份</view>
+    <view class="title">今天管理哪个档口？</view>
+    <view class="hint">开发版按档口进入；生产环境请接入服务端商家登录与权限校验。</view>
+
+    <view class="field-label">所属食堂</view>
+    <picker range="{{canteens}}" range-key="name" value="{{canteenIndex}}" bindchange="chooseCanteen">
+      <view class="picker-field">
+        <text>{{canteens[canteenIndex].name || '请选择食堂'}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </picker>
+
+    <view class="field-label">经营档口</view>
+    <view wx:if="{{loading}}" class="loading">正在连接服务…</view>
+    <view wx:elif="{{error}}" class="error-box">
+      <view>{{error}}</view>
+      <button class="ghost retry" size="mini" bindtap="loadCanteens">重新加载</button>
+    </view>
+    <view wx:elif="{{stalls.length}}" class="stall-list">
+      <view wx:for="{{stalls}}" wx:key="id" class="stall {{selectedStallId === item.id ? 'selected' : ''}}" data-id="{{item.id}}" bindtap="chooseStall">
+        <view>
+          <view class="stall-name">{{item.name}}</view>
+          <view class="stall-meta">{{item.is_open ? '营业中' : '暂停营业'}} · 取餐号前缀 {{item.pickup_prefix || '--'}}</view>
+        </view>
+        <view class="radio">{{selectedStallId === item.id ? '✓' : ''}}</view>
+      </view>
+    </view>
+    <view wx:else class="loading">该食堂暂无档口</view>
+
+    <button class="primary enter" loading="{{entering}}" disabled="{{!selectedStallId || loading}}" bindtap="enter">进入工作台</button>
+    <view class="server-link" bindtap="toggleServer">{{showServer ? '收起' : '配置'}}后端服务地址</view>
+
+    <view wx:if="{{showServer}}" class="server-box">
+      <input class="server-input" value="{{apiBaseUrl}}" bindinput="inputApiBase" placeholder="https://api.example.com" />
+      <button class="secondary" size="mini" bindtap="saveServer">保存并重连</button>
+    </view>
+  </view>
+
+  <view class="version">Merchant Mini Program · v1.0.0</view>
+</view>

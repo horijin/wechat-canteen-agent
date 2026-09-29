@@ -1,0 +1,38 @@
+<!-- pages/index/index.wxml -->
+<view class="hero">
+  <view class="title">今天想吃什么？</view>
+  <view class="subtitle">提前下单，到档口凭取餐码取餐</view>
+</view>
+
+<view class="page">
+  <!-- 1. 加载中骨架屏占位 -->
+  <view wx:if="{{loading}}" class="skeleton-container fade-in">
+    <view class="skeleton-card" wx:for="{{[1, 2, 3]}}" wx:key="*this">
+      <view class="skeleton-title"></view>
+      <view class="skeleton-subtitle"></view>
+    </view>
+  </view>
+
+  <!-- 2. 食堂列表平滑载入 -->
+  <view wx:else class="fade-in">
+    <view 
+      wx:for="{{canteens}}" 
+      wx:key="id" 
+      class="card canteen" 
+      data-id="{{item.id}}" 
+      data-name="{{item.name}}" 
+      bindtap="chooseCanteen"
+      hover-class="canteen-hover"
+      hover-stay-time="100"
+    >
+      <view class="canteen-info">
+        <view class="canteen-name">{{item.name}}</view>
+        <view class="subtitle">{{item.location}}</view>
+      </view>
+      <view class="arrow">›</view>
+    </view>
+
+    <button class="secondary merchant-entry" bindtap="openMerchant">商家工作台（演示）</button>
+  </view>
+</view>
+

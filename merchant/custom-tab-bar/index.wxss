@@ -1,0 +1,93 @@
+.tab-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999; /* 提高层级，防止被 menu 页面的卡片遮挡 */
+  padding-bottom: env(safe-area-inset-bottom);
+  background: transparent;
+  pointer-events: none; 
+}
+
+.tab-bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 110rpx;
+  margin: 0 24rpx 16rpx;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 40rpx;
+  border: 1rpx solid rgba(232, 238, 235, 0.9);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #7b8782;
+  transition: color 0.2s ease;
+  background: transparent; 
+}
+
+.tab-item:active {
+  opacity: 0.7;
+}
+
+/* 选中高亮状态 */
+.tab-item.active {
+  color: #176b52 !important;
+}
+
+.icon-wrapper {
+  position: relative;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-icon {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.symbol-icon {
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tab-text {
+  margin-top: 6rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.tab-item.active .tab-text {
+  font-weight: 700;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -16rpx;
+  min-width: 28rpx;
+  height: 28rpx;
+  padding: 0 8rpx;
+  border-radius: 14rpx;
+  background: #c8422e;
+  color: #ffffff;
+  font-size: 18rpx;
+  font-weight: 700;
+  line-height: 28rpx;
+  text-align: center;
+}

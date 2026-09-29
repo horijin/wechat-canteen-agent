@@ -1,0 +1,103 @@
+/* app.wxss */
+page {
+  min-height: 100%;
+  background: #f4f7f5;
+  color: #17211d;
+  font-size: 28rpx;
+}
+
+.page { padding: 28rpx; }
+
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 8rpx 30rpx rgba(23, 107, 82, 0.07);
+  transition: all 0.2s ease;
+}
+
+.title { font-size: 42rpx; font-weight: 700; }
+.subtitle { color: #65736d; margin-top: 8rpx; }
+.row { display: flex; align-items: center; justify-content: space-between; }
+.muted { color: #7b8782; }
+.price { color: #dc5a37; font-size: 34rpx; font-weight: 700; }
+
+.primary {
+  background: #176b52 !important;
+  color: #fff !important;
+  border-radius: 999rpx;
+  font-weight: 600;
+}
+
+.secondary {
+  background: #e5f2ed !important;
+  color: #176b52 !important;
+  border-radius: 999rpx;
+}
+
+.danger { background: #fff0ec !important; color: #c44b2b !important; }
+
+.pill {
+  display: inline-block;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: #e5f2ed;
+  color: #176b52;
+  font-size: 24rpx;
+}
+
+.empty { text-align: center; color: #7b8782; padding: 120rpx 20rpx; }
+.field { margin-bottom: 26rpx; }
+.label { display: block; font-weight: 600; margin-bottom: 12rpx; }
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  background: #f2f5f3;
+  padding: 22rpx;
+  border-radius: 16rpx;
+}
+
+
+/* 优雅平滑页面入场动画 */
+.fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 点击反馈组件类 */
+.card-hover {
+  opacity: 0.85;
+  transform: scale(0.985);
+}
+
+/* 通用骨架屏占位动画 */
+.skeleton-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 22rpx;
+  animation: skeletonPulse 1.4s infinite ease-in-out;
+}
+
+.skeleton-block {
+  background: #e8edea;
+  border-radius: 8rpx;
+}
+
+@keyframes skeletonPulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
